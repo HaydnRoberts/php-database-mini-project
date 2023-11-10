@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Mid-Cornwall Vet Center</title>
 </head>
 <body>
     <?php
@@ -21,6 +21,7 @@
 
     // Output 
     echo "You have successfully added " . $_POST["name"] . " to the database";
+    header("Location: http://localhost/php-database-mini-project/8/edit-pets.php");
     
     ?>
 </body>
