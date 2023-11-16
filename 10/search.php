@@ -44,12 +44,14 @@ $pet_names_json = json_encode($pet_names);
     <div id="predictive"></div>
     
     <script>
+        // gets the pet names from the json
         var petNames = <?= $pet_names_json ?>;
         function predictive() {
             var current = document.getElementById("search").value;
             console.log(current);
             var predictiveDiv = document.getElementById("predictive");
-            predictiveDiv.innerHTML = ""; // Clear the previous suggestions
+            // Clear the previous suggestions
+            predictiveDiv.innerHTML = "";
             if (current !== "") {
                 var matches = petNames.filter(function(petName) {
                     return petName.startsWith(current);
@@ -59,8 +61,10 @@ $pet_names_json = json_encode($pet_names);
                     p.innerText = match;
                     p.onclick = function() {
                         document.getElementById("search").value = match;
-                        predictiveDiv.innerHTML = ""; // Clear the suggestions after a click
-                        document.querySelector('form').submit(); // Submit the form
+                        // Clear the suggestions after a click
+                        predictiveDiv.innerHTML = ""; 
+                        // Submit the form
+                        document.querySelector('form').submit(); 
                     };
                     predictiveDiv.appendChild(p);
                 });
@@ -100,10 +104,10 @@ $pet_names_json = json_encode($pet_names);
     ?>
     <table>
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Type</th>
+            <th onclick="sortTable(0)">ID</th>
+            <th onclick="sortTable(1)">Name</th>
+            <th onclick="sortTable(2)">Age</th>
+            <th onclick="sortTable(3)">Type</th>
             <th></th>
             <th></th>
         </tr>
@@ -124,5 +128,8 @@ $pet_names_json = json_encode($pet_names);
         ?>
     </table>
     <?php endif ?>
+
+    <script src="..\partials\mergesort.js"></script>
+
     </body>
 </html>

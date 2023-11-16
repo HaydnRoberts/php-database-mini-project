@@ -13,7 +13,8 @@
         if ($conn->connect_error) {
             // Redirect to the error page
             header("Location: http://localhost/php-database-mini-project/5/db-fail.html");
-            exit; // Make sure to exit to prevent further code execution
+            // Make sure to exit to prevent further code execution
+            exit; 
         }
 
         return $conn;
@@ -38,12 +39,14 @@
         $stmt->execute();
         return $stmt->get_result();
     }
-
+    
 
     function get_all_pets($conn) {
+        // selects all names from the pets table
         $sql = "SELECT name FROM pets";
         $result = $conn->query($sql);
         return $result;
     }
+
     
 ?>
