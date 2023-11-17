@@ -14,9 +14,9 @@
     $conn = connect();
     
     // sql query
-    $query = "INSERT INTO pets(name, age, type) VALUES(?,?,?)";
+    $query = "INSERT INTO pets(name, age, type, owner_first, owner_last) VALUES(?,?,?,?,?)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sss", $_POST["name"], $_POST["age"], $_POST["type"]);
+    $stmt->bind_param("sss", $_POST["name"], $_POST["age"], $_POST["type"], $_POST["owner_first"], $_POST["owner_last"]);
     $stmt->execute();
 
     // Output 

@@ -7,17 +7,17 @@ $show_results = false;
 $user_search_string = "";
 if (isset($_POST["search"])) {
     $show_results = true;
-    $result = find_pet($_POST['search'], $conn);
+    $result = find_owner($_POST['search'], $conn);
     $user_search_string= $_POST['search'];
 }
 
 // Fetch all pet names
-$all_pets_result = get_all_pets($conn);
-$pet_names = array();
-while ($row = $all_pets_result->fetch_array(MYSQLI_ASSOC)) {
-    $pet_names[] = $row["name"];
+$all_owners_result = get_all_owners($conn);
+$owner_names = array();
+while ($row = $all_owners_result->fetch_array(MYSQLI_ASSOC)) {
+    $owner_names[] = $row["owner_first"];
 }
-$pet_names_json = json_encode($pet_names);
+$owner_names_json = json_encode($owner_names);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,28 +35,36 @@ $pet_names_json = json_encode($pet_names);
     ?>
 
 <h1>Search</h1>
-    <form action="search.php" method="POST">
+    <form action="ownersearch.php" method="POST">
     <p>
-        Enter part of pets name:
+        Enter the owners first name:
     </p>
     <input type="text" name="search" value="<?= $user_search_string ?>" onkeyup="predictive()" id="search">
     <input type="submit" value="Find">
     <div id="predictive"></div>
     
     <script>
-        // gets the pet names from the json
-        var petNames = <?= $pet_names_json ?>;
+        // gets the pet owner's first names from the json
+        var ownerNames = <?= $owner_names_json ?>;
         function predictive() {
             var current = document.getElementById("search").value;
             console.log(current);
             var predictiveDiv = document.getElementById("predictive");
             // Clear the previous suggestions
             predictiveDiv.innerHTML = "";
+
             if (current !== "") {
-                var matches = petNames.filter(function(petName) {
-                    return petName.startsWith(current);
+                var uniqueMatches = new Set();
+                
+                ownerNames.forEach(function(ownerName) {
+                    // if the owner name starts with what is in the search box then add it to the predictions
+                    if (ownerName.startsWith(current)) {
+                        uniqueMatches.add(ownerName);
+                    }
                 });
-                matches.forEach(function(match) {
+                
+                // this was updated to only show each name once to avoid wasting space from repitition
+                uniqueMatches.forEach(function(match) {
                     var p = document.createElement("p");
                     p.innerText = match;
                     p.onclick = function() {
@@ -114,12 +122,12 @@ $pet_names_json = json_encode($pet_names);
     <?php endif ?>
     <table>
         <tr>
-            <th onclick="sortTable(0)">ID</th>
-            <th onclick="sortTable(1)">Name</th>
-            <th onclick="sortTable(2)">Age</th>
-            <th onclick="sortTable(3)">Type</th>
-            <th onclick="sortTable(4)">Owner name</th>
-            <th onclick="sortTable(5)">Owner surname</th>
+            <th onclick="sortTable(0)">Owner name</th>
+            <th onclick="sortTable(1)">Owner surname</th>
+            <th onclick="sortTable(2)">ID</th>
+            <th onclick="sortTable(3)">Name</th>
+            <th onclick="sortTable(4)">Age</th>
+            <th onclick="sortTable(5)">Type</th>
             <th></th>
             <th></th>
         </tr>
@@ -128,12 +136,12 @@ $pet_names_json = json_encode($pet_names);
         while ($row = $result->fetch_array(MYSQLI_ASSOC)):
         ?>
         <tr>
+            <td><?= $row["owner_first"] ?></td>
+            <td><?= $row["owner_last"] ?></td>
             <td><?= $row["id"] ?></td>
             <td><?= $row["name"] ?></td>
             <td><?= $row["age"] ?></td>
             <td><?= $row["type"] ?></td>
-            <td><?= $row["owner_first"] ?></td>
-            <td><?= $row["owner_last"] ?></td>
             <td><a href="..\8\edit.php?id=<?= $row["id"] ?>" class="button edit">Edit</a></td>
             <td><a href="..\8\delete-action.php?id=<?= $row["id"] ?>" class="button delete">Delete</a></td>
         </tr>

@@ -13,6 +13,16 @@
     include "..\partials\menu.php"; 
     ?>
     <h2>Registered pets</h2>
+    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="success"): ?>
+        <div class="success">
+            Updated Successfully.
+        </div>
+    <?php endif ?>
+    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="delete-success"): ?>
+        <div class="success">
+            Deleted Successfully.
+        </div>
+    <?php endif ?>
     <table>
     <tr>
         <th>ID</th>
@@ -45,16 +55,6 @@
     $conn->close();
     ?>
     </table>
-    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="success"): ?>
-        <div class="success">
-            Updated Successfully.
-        </div>
-    <?php endif ?>
-    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="delete-success"): ?>
-        <div class="success">
-            Deleted Successfully.
-        </div>
-    <?php endif ?>
 
 </body>
 </html>

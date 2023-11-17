@@ -48,6 +48,10 @@
         <p>Enter pet name: <input type="test" name="name"></p>
         <p>Enter pet age: <input type="test" name="age"></p>
         <p>Enter pet type: <input type="test" name="type"></p>
+        <hr>
+        <p>Enter owner's first name: <input type="test" name="owner_first"></p>
+        <p>Enter owner's last name: <input type="test" name="owner_last"></p>
+        <hr>
         <input class="submit" type="submit" value="Add pet details">
     </form>
 </body>

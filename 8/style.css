@@ -1,7 +1,6 @@
 table {
-    border-collapse: collapse;
     width: 80%;
-    max-width: 800px;
+    border-collapse: collapse;
     background-color: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -23,6 +22,11 @@ tr:nth-child(even) {
 }
 tr:hover {
     background-color: #dedede;
+}
+.editform {
+    background-color: #333;
+    color: #ffffff;
+    width: 80%;
 }
 .success {
     margin-top: 18px;
@@ -120,4 +124,27 @@ tr:hover {
 
 #predictive p:hover {
     background-color: #f1f1f1;
+}
+
+
+.editform {
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 800px;
+    color: #000;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.formtitle {
+    border-collapse: collapse;
+    background-color: #333;
+    color: #ffffff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
 }
