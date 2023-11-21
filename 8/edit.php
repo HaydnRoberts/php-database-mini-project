@@ -1,34 +1,3 @@
-
-
-<?php
-// Include connection code 
-include "db.php";
-// Initialize connection
-$conn = connect();
-
-// Retrieve pet's ID from the URL parameter
-$petId = $_GET['id'];
-
-// Query to get owner's first and last name
-$sqlOwner = "SELECT owner_first, owner_last FROM pets WHERE id=?";
-$stmtOwner = $conn->prepare($sqlOwner);
-$stmtOwner->bind_param("i", $petId);
-$stmtOwner->execute();
-$resultOwner = $stmtOwner->get_result();
-$ownerInfo = $resultOwner->fetch_assoc();
-
-// Retrieve owner's first and last name
-$ownerFirst = $ownerInfo['owner_first'];
-$ownerLast = $ownerInfo['owner_last'];
-
-// Query to get all pets belonging to the owner
-$sqlPets = "SELECT * FROM pets WHERE owner_first=? AND owner_last=?";
-$stmtPets = $conn->prepare($sqlPets);
-$stmtPets->bind_param("ss", $ownerFirst, $ownerLast);
-$stmtPets->execute();
-$resultPets = $stmtPets->get_result();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +11,36 @@ $resultPets = $stmtPets->get_result();
     <?php
     include "..\partials\menu.php"; 
     ?>
+    
     <?php if(isset($_GET["msg"]) && $_GET["msg"]=="owner"): ?>
+    <?php
+    // Include connection code 
+    include "db.php";
+    // Initialize connection
+    $conn = connect();
+
+    // Retrieve pet's ID from the URL parameter
+    $petId = $_GET['id'];
+
+    // Query to get owner's first and last name
+    $sqlOwner = "SELECT owner_first, owner_last FROM pets WHERE id=?";
+    $stmtOwner = $conn->prepare($sqlOwner);
+    $stmtOwner->bind_param("i", $petId);
+    $stmtOwner->execute();
+    $resultOwner = $stmtOwner->get_result();
+    $ownerInfo = $resultOwner->fetch_assoc();
+
+    // Retrieve owner's first and last name
+    $ownerFirst = $ownerInfo['owner_first'];
+    $ownerLast = $ownerInfo['owner_last'];
+
+    // Query to get all pets belonging to the owner
+    $sqlPets = "SELECT * FROM pets WHERE owner_first=? AND owner_last=?";
+    $stmtPets = $conn->prepare($sqlPets);
+    $stmtPets->bind_param("ss", $ownerFirst, $ownerLast);
+    $stmtPets->execute();
+    $resultPets = $stmtPets->get_result();
+    ?>    
     <h2 class="formtitle"><?= $ownerFirst ?> <?= $ownerLast ?>'s Pets</h2>
     <?php
     // Display each pet belonging to the owner
@@ -82,8 +80,16 @@ $resultPets = $stmtPets->get_result();
     <?php endif ?>
     <?php if(isset($_GET["msg"]) && $_GET["msg"]=="pets"): ?>
     <?php
-    // Display each pet belonging to the owner
-    while ($pet = $resultPets->fetch_assoc()) {
+    // Include connection code 
+    include "db.php";
+    // Initialize connection
+    $conn = connect();
+    $sql = "SELECT * FROM pets WHERE id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $_GET['id']);
+    $row = $stmt->execute();
+    $result = $stmt->get_result();
+    $pet = $result->fetch_assoc();
     ?>
         <form class="editform" action="edit-action.php" method="POST">
             <h2>Edit <?= $pet['name'] ?></h2>
@@ -107,12 +113,6 @@ $resultPets = $stmtPets->get_result();
             </p>
         </form>
         <?php
-        }
-        
-        // Free the result sets
-        $resultOwner->free_result();
-        $resultPets->free_result();
-
         // Close the connections
         $conn->close();
         ?>
