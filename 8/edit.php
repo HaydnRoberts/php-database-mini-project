@@ -42,9 +42,8 @@ $resultPets = $stmtPets->get_result();
     <?php
     include "..\partials\menu.php"; 
     ?>
-
+    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="owner"): ?>
     <h2 class="formtitle"><?= $ownerFirst ?> <?= $ownerLast ?>'s Pets</h2>
-
     <?php
     // Display each pet belonging to the owner
     while ($pet = $resultPets->fetch_assoc()) {
@@ -70,15 +69,55 @@ $resultPets = $stmtPets->get_result();
                 <input type="submit" class="submit" value="Update">
             </p>
         </form>
+        <?php
+        }
+        
+        // Free the result sets
+        $resultOwner->free_result();
+        $resultPets->free_result();
+
+        // Close the connections
+        $conn->close();
+        ?>
+    <?php endif ?>
+    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="pets"): ?>
     <?php
-    }
-
-    // Free the result sets
-    $resultOwner->free_result();
-    $resultPets->free_result();
-
-    // Close the connections
-    $conn->close();
+    // Display each pet belonging to the owner
+    while ($pet = $resultPets->fetch_assoc()) {
     ?>
+        <form class="editform" action="edit-action.php" method="POST">
+            <h2>Edit <?= $pet['name'] ?></h2>
+            <p>
+                Pet Name:
+                <input type="text" name="name" value="<?= $pet["name"] ?>">
+            </p>
+            <p>
+                Age:
+                <input type="text" name="age" value="<?= $pet["age"] ?>">
+            </p>
+            <p>
+                Type:
+                <input type="text" name="type" value="<?= $pet["type"] ?>">
+            </p>
+            <input type="hidden" name="id" value="<?= $pet["id"] ?>">
+            <hr>
+
+            <p>
+                <input type="submit" class="submit" value="Update">
+            </p>
+        </form>
+        <?php
+        }
+        
+        // Free the result sets
+        $resultOwner->free_result();
+        $resultPets->free_result();
+
+        // Close the connections
+        $conn->close();
+        ?>
+        <?php endif ?>
+
+    
 </body>
 </html>

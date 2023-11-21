@@ -23,6 +23,11 @@
             Deleted Successfully.
         </div>
     <?php endif ?>
+    <?php if(isset($_GET["msg"]) && $_GET["msg"]=="add-success"): ?>
+        <div class="success">
+            Added Pet to database
+        </div>
+    <?php endif ?>
     <table>
     <tr>
         <th>ID</th>
@@ -46,8 +51,8 @@
         <td> <?= $row["name"] ?> </td>
         <td> <?= $row["age"] ?> </td>
         <td> <?= $row["type"] ?> </td>
-        <td> <a href="edit.php?id=<?= $row["id"] ?>" class="button edit">Edit</a> </td>
-        <td> <a href="delete-action.php?id=<?= $row["id"] ?> " class="button delete">Delete</a> </td>
+        <td><a href="..\8\edit.php?id=<?= $row["id"] ?>&msg=pets" class="button edit">Edit pet</a></td>
+        <td> <a href="delete-action.php?id=<?= $row["id"] ?> " class="button delete">Delete pet</a> </td>
         </tr>
     <?php
     }

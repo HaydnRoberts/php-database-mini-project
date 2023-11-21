@@ -106,6 +106,7 @@ $owner_names_json = json_encode($owner_names);
     
 </form>
 
+
     <?php
     // if the user has subbmited a search then the table will appear
     if ($show_results):
@@ -142,8 +143,8 @@ $owner_names_json = json_encode($owner_names);
             <td><?= $row["name"] ?></td>
             <td><?= $row["age"] ?></td>
             <td><?= $row["type"] ?></td>
-            <td><a href="..\8\edit.php?id=<?= $row["id"] ?>" class="button edit">Edit</a></td>
-            <td><a href="..\8\delete-action.php?id=<?= $row["id"] ?>" class="button delete">Delete</a></td>
+            <td><a href="..\8\edit.php?id=<?= $row["id"] ?>&msg=owner" class="button edit">Edit pets</a></td>
+            <td><a href="..\8\delete-action.php?id=<?= $row["id"] ?>" class="button delete">Delete pet</a></td>
         </tr>
         <?php
         endwhile;

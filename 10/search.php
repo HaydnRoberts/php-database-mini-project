@@ -134,8 +134,8 @@ $pet_names_json = json_encode($pet_names);
             <td><?= $row["type"] ?></td>
             <td><?= $row["owner_first"] ?></td>
             <td><?= $row["owner_last"] ?></td>
-            <td><a href="..\8\edit.php?id=<?= $row["id"] ?>" class="button edit">Edit</a></td>
-            <td><a href="..\8\delete-action.php?id=<?= $row["id"] ?>" class="button delete">Delete</a></td>
+            <td><a href="..\8\edit.php?id=<?= $row["id"] ?>&msg=pets" class="button edit">Edit pet</a></td>
+            <td><a href="..\8\delete-action.php?id=<?= $row["id"] ?>" class="button delete">Delete pet</a></td>
         </tr>
         <?php
         endwhile;
