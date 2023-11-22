@@ -75,24 +75,24 @@ $pet_names_json = json_encode($pet_names);
     </script>
     
     <style>
-        .search-container {
-    position: relative;
-    display: inline-block;
-}
+    .search-container {
+        position: relative;
+        display: inline-block;
+    }
 
-#search {
-    width: 20%;
-    box-sizing: border-box;
-}
+    #search {
+        width: 20%;
+        box-sizing: border-box;
+    }
 
-#predictive {
-    position: absolute;
-    width: 20%;
-    left: 0;
-    /* other styles... */
-}
+    #predictive {
+        position: absolute;
+        width: 20%;
+        left: 0;
+        /* other styles... */
+    }
 
-        </style>
+    </style>
 
 
     
